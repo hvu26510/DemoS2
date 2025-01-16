@@ -1,4 +1,5 @@
 using DemoS2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -11,6 +12,12 @@ namespace DemoS2.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [Authorize]
+        public IActionResult Secured()
+        {
+            return View((object)"hello");
         }
 
         public IActionResult Index()

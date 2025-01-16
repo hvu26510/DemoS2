@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DemoS2.Models;
 using DemoS2.Models.ViewModels;
+using System.Diagnostics.Contracts;
 
 namespace DemoS2.Controllers
 {
@@ -48,5 +49,32 @@ namespace DemoS2.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signinManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded) 
+                { 
+                   RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty,"Sai thong tin roi");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signinManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
