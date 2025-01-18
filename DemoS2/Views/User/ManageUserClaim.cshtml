@@ -1,0 +1,30 @@
+﻿@model DemoS2.Models.ViewModels.UserClaimsViewModel
+
+<h2>Manage Claims for User</h2>
+
+<form asp-action="ManageUserClaim" method="post">
+    <input type="hidden" asp-for="UserID" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Claim</th>
+                <th>Assigned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Claims.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="Claims[i].ClaimType" />
+                        @Model.Claims[i].ClaimType
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="Claims[i].IsSelected" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>

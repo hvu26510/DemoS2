@@ -13,6 +13,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+//Them policy de dung cho authorize
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("DeletePolicy", policy => policy.RequireClaim("Delete"));
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
